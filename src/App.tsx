@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Header from './components/Header';
+import List from './components/List';
+import CreateArea from './components/CreateArea';
+import Footer from './components/Footer';
+
+export interface IState {
+  notes: {
+    title: string;
+    content: string;
+  }[];
+}
+
+export interface Note {
+  title: string;
+  content: string;
+}
 
 function App() {
+  const [notes, setNotes] = useState<IState['notes']>([]);
+
+  const onAdd = (note: Note) => {
+    setNotes((prevNotes) => {
+      return [...prevNotes, note];
+    });
+  };
+
+  const onDelete = (id: number): void[] => [
+    setNotes((prevNotes) => {
+      return prevNotes.filter((note, index) => {
+        return index !== id;
+      });
+    }),
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <div className="App">
+        <CreateArea onAdd={onAdd} />
+        <List notes={notes} onDelete={onDelete} />
+      </div>
+      <Footer />
     </div>
   );
 }
