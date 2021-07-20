@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import List from './components/List';
 import CreateArea from './components/CreateArea';
@@ -20,7 +20,7 @@ function App() {
   const [notes, setNotes] = useState<IState['notes']>([]);
 
   // everytime on a re render, we want to store what we have in localstorage to our setnotes state
-  React.useEffect(() => {
+  useEffect(() => {
     const data = localStorage.getItem('my-notes');
     if (data) {
       setNotes(JSON.parse(data));
@@ -28,7 +28,7 @@ function App() {
   }, []);
 
   // storing the local storage
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem('my-notes', JSON.stringify(notes));
   });
 
