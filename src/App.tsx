@@ -19,7 +19,6 @@ export interface Note {
 function App() {
   const [notes, setNotes] = useState<IState['notes']>([]);
 
-  // everytime on a re render, we want to store what we have in localstorage to our setnotes state
   useEffect(() => {
     const data = localStorage.getItem('my-notes');
     if (data) {
@@ -27,7 +26,6 @@ function App() {
     }
   }, []);
 
-  // storing the local storage
   useEffect(() => {
     localStorage.setItem('my-notes', JSON.stringify(notes));
   });
